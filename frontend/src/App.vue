@@ -25,7 +25,7 @@ async function sendMessage() {
   await nextTick()
   chatBottom.value?.scrollIntoView({ behavior: 'smooth' })
 
-  const res = await fetch('http://localhost:8000/index.php', {
+  const res = await fetch('https://ai-chatbot-production-1979.up.railway.app/index.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
