@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
+import { marked } from 'marked'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -90,12 +91,12 @@ async function sendMessage() {
 
           <!-- Nachricht Bubble -->
           <div
-            :class="
-              msg.role === 'user'
-                ? 'bg-black text-white rounded-2xl rounded-tr-none px-4 py-3 max-w-sm'
-                : 'bg-gray-100 text-gray-700 rounded-2xl rounded-tl-none px-4 py-3 max-w-sm'
-            "
-          >
+            v-if="msg.role === 'assistant'"
+            v-html="marked(msg.content)"
+            class="bg-gray-100 text-gray-700 rounded-2xl rounded-tl-none px-4 py-3 max-w-sm prose"
+          ></div>
+
+          <div v-else class="bg-black text-white rounded-2xl rounded-tr-none px-4 py-3 max-w-sm">
             {{ msg.content }}
           </div>
         </div>
