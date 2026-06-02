@@ -55,15 +55,19 @@ Open [http://localhost:5173](http://localhost:5173)
 
 ## Project Structure
 
+```
 ai-chatbot/
-├── backend/          # PHP 8 API
-│   ├── index.php     # Main endpoint
-│   ├── .env          # API keys (not committed)
-│   └── composer.json
-├── frontend/         # Vue 3 App
+├── backend/
+│   ├── vendor/
+│   ├── index.php
+│   ├── composer.json
+│   └── .env.example
+├── frontend/
 │   ├── src/
-│   │   ├── App.vue   # Chat UI
+│   │   ├── App.vue
 │   │   └── main.ts
-│   └── package.json
+│   ├── package.json
+│   └── vite.config.ts
 └── docker-compose.yml
+```
 
