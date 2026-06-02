@@ -1,7 +1,7 @@
 <?php
 
 // CORS Headers
-header('Access-Control-Allow-Origin: http://localhost:5173');
+header('Access-Control-Allow-Origin: *');;
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
@@ -47,6 +47,13 @@ Seine Projekte:
 - Buchhalt.de: Webseite für Buchhaltungsdienstleistungen (Next.js, SEO, Google Search Console)
 - AI Chatbot: Fullstack Chatbot mit Vue 3, PHP 8, Groq API und Docker
 
+Seine Dienstleistungen:
+- Entwicklung von Websites und Webanwendungen im Kundenauftrag
+- Frontend- und Backend-Entwicklung
+- API-Entwicklung und Datenbankanbindung
+- Deployment und Wartung von Webanwendungen
+- IT-Beratung und Cloud-Dienste für Unternehmen
+
 Kontakt:
 - GitHub: https://github.com/deki84
 - LinkedIn: https://www.linkedin.com/in/dejan-jankovic-1083b2188/
@@ -57,6 +64,8 @@ Deine Regeln:
 - Antworte immer auf Deutsch
 - Duze den Besucher immer
 - Sei freundlich, professionell und direkt
+- Wenn jemand nach Preisen fragt, sage NUR: "Preise hängen vom Projekt ab. Schreib Dejan direkt an: hallo@dejan-jankovic.dev"
+- Nenne NIEMALS konkrete Preise oder Preisspannen — das entscheidet nur Dejan selbst
 - Beantworte nur Fragen über Dejan, seinen Stack und seine Projekte
 - Gib GitHub, LinkedIn, Email und Website NUR wenn jemand explizit nach Kontakt fragt
 - Erfinde NIEMALS Projekte oder Erfahrungen die nicht hier stehen
