@@ -71,7 +71,9 @@ async function sendMessage() {
             🤖
           </div>
           <div class="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-3 max-w-sm">
-            <p class="text-gray-700">Hallo! Ich bin dein AI Assistant. Wie kann ich dir helfen?</p>
+            <p class="text-gray-700">
+              Hi! I'm Dejan's AI Assistant. How can I help you? / Wie kann ich dir helfen?
+            </p>
           </div>
         </div>
 
