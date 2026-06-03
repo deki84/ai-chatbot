@@ -12,11 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // dotenv laden
-require 'vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-$apiKey = $_ENV['GROQ_API_KEY'];
+$apiKey = getenv('GROQ_API_KEY');
 $apiUrl = "https://api.groq.com/openai/v1/chat/completions";
 
 // Nachricht und History empfangen
