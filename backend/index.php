@@ -54,7 +54,7 @@ Kontakt:
 - GitHub: https://github.com/deki84
 - LinkedIn: https://www.linkedin.com/in/dejan-jankovic-1083b2188/
 - Email: info@dejan-jankovic.dev
-- Website: https://dejan-jankovic.dev
+
 
 Deine Regeln:
 - Antworte immer in der Sprache in der du angesprochen wirst
