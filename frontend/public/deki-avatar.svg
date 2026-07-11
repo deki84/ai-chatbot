@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Deki — AI Assistant von Dejan Jankovic -->
+  <!-- Der Kopf ist als "D" geformt: links gerade Kante, rechts runder Bogen -->
+
+  <!-- Dunkler Kreis-Hintergrund (passend zum Portfolio-Design) -->
+  <circle cx="90" cy="90" r="90" fill="#16181f"/>
+
+  <!-- Antenne -->
+  <line x1="97" y1="34" x2="97" y2="46" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="97" cy="29" r="6" fill="#6366f1"/>
+
+  <!-- Kopf in D-Silhouette -->
+  <path d="M64 46 H100 A42 42 0 0 1 100 130 H64 Q52 130 52 118 V58 Q52 46 64 46 Z" fill="#ffffff"/>
+
+  <!-- Augen (Indigo mit Glanzpunkt) -->
+  <circle cx="79" cy="83" r="9" fill="#6366f1"/>
+  <circle cx="115" cy="83" r="9" fill="#6366f1"/>
+  <circle cx="82" cy="80" r="3" fill="#ffffff"/>
+  <circle cx="118" cy="80" r="3" fill="#ffffff"/>
+
+  <!-- Lächeln -->
+  <path d="M77 106 Q97 120 117 106" fill="none" stroke="#16181f" stroke-width="5" stroke-linecap="round"/>
+</svg>

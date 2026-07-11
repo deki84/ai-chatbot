@@ -13,11 +13,14 @@ const isLoading = ref(false)
 const chatBottom = ref<HTMLElement | null>(null)
 
 async function sendMessage() {
-  if (!userMessage.value.trim()) return
+  if (!userMessage.value.trim() || isLoading.value) return
+
+  const currentMessage = userMessage.value
+  // History VOR dem Push sichern — sonst geht die aktuelle Nachricht doppelt an die API
+  const historyToSend = [...messages.value]
 
   // User Nachricht hinzufügen
-  messages.value.push({ role: 'user', content: userMessage.value })
-  const currentMessage = userMessage.value
+  messages.value.push({ role: 'user', content: currentMessage })
   userMessage.value = ''
   isLoading.value = true
 
@@ -25,21 +28,37 @@ async function sendMessage() {
   await nextTick()
   chatBottom.value?.scrollIntoView({ behavior: 'smooth' })
 
-  const res = await fetch('/api/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      message: currentMessage,
-      history: messages.value,
-    }),
-  })
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: currentMessage,
+        history: historyToSend,
+      }),
+    })
 
-  const data = await res.json()
-  messages.value.push({ role: 'assistant', content: data.reply })
-  isLoading.value = false
+    const data = await res.json()
 
-  await nextTick()
-  chatBottom.value?.scrollIntoView({ behavior: 'smooth' })
+    // Fehlerfall abfangen, statt undefined an marked() weiterzugeben
+    messages.value.push({
+      role: 'assistant',
+      content:
+        res.ok && data.reply
+          ? data.reply
+          : 'Ups, da ist etwas schiefgelaufen. Versuch es gleich nochmal. 🙈',
+    })
+  } catch {
+    messages.value.push({
+      role: 'assistant',
+      content: 'Verbindungsfehler — bist du online?',
+    })
+  } finally {
+    // läuft immer — Ladeindikator bleibt nie hängen
+    isLoading.value = false
+    await nextTick()
+    chatBottom.value?.scrollIntoView({ behavior: 'smooth' })
+  }
 }
 </script>
 
@@ -50,13 +69,13 @@ async function sendMessage() {
     <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl flex flex-col h-[85vh]">
       <!-- Header -->
       <div class="flex items-center gap-4 p-6 border-b border-gray-100">
-        <div
-          class="w-12 h-12 rounded-full bg-black flex items-center justify-center text-white text-xl"
-        >
-          🤖
-        </div>
+        <img
+          src="/deki-avatar.svg"
+          alt="Deki"
+          class="w-12 h-12 rounded-full object-cover flex-shrink-0"
+        />
         <div>
-          <h1 class="font-bold text-gray-800 text-lg">AI Assistant</h1>
+          <h1 class="font-bold text-gray-800 text-lg">Deki</h1>
           <p class="text-green-500 text-sm font-medium">● Online</p>
         </div>
       </div>
@@ -65,11 +84,11 @@ async function sendMessage() {
       <div class="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
         <!-- Willkommensnachricht -->
         <div v-if="messages.length === 0" class="flex items-start gap-3">
-          <div
-            class="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white text-sm flex-shrink-0"
-          >
-            🤖
-          </div>
+          <img
+            src="/deki-avatar.svg"
+            alt=""
+            class="w-8 h-8 rounded-full object-cover flex-shrink-0"
+          />
           <div class="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-3 max-w-sm">
             <p class="text-gray-700">
               Hi! I'm Dejan's AI Assistant. How can I help you? / Wie kann ich dir helfen?
@@ -84,12 +103,12 @@ async function sendMessage() {
           :class="msg.role === 'user' ? 'flex justify-end' : 'flex items-start gap-3'"
         >
           <!-- AI Avatar -->
-          <div
+          <img
             v-if="msg.role === 'assistant'"
-            class="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white text-sm flex-shrink-0"
-          >
-            🤖
-          </div>
+            src="/deki-avatar.svg"
+            alt=""
+            class="w-8 h-8 rounded-full object-cover flex-shrink-0"
+          />
 
           <!-- Nachricht Bubble -->
           <div
@@ -105,11 +124,11 @@ async function sendMessage() {
 
         <!-- Loading -->
         <div v-if="isLoading" class="flex items-start gap-3">
-          <div
-            class="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white text-sm flex-shrink-0"
-          >
-            🤖
-          </div>
+          <img
+            src="/deki-avatar.svg"
+            alt=""
+            class="w-8 h-8 rounded-full object-cover flex-shrink-0"
+          />
           <div class="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-3">
             <div class="flex gap-1">
               <span
