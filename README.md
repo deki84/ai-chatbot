@@ -1,6 +1,6 @@
 # AI Chatbot – Personal Portfolio Assistant
 
-A fullstack AI chatbot built with Vue 3, PHP 8, and the Groq API (LLaMA 3.3 70B).  
+A fullstack AI chatbot built with Vue 3, next.js, and the Groq API (openai/gpt-oss-120b).  
 Designed as a personal portfolio assistant that answers questions about Dejan Jankovic — his stack, projects, and services.
 
 ## Tech Stack
@@ -11,9 +11,9 @@ Designed as a personal portfolio assistant that answers questions about Dejan Ja
 - Marked.js (Markdown rendering)
 
 **Backend**
-- PHP 8.5
-- Groq API (LLaMA 3.3 70B)
-- vlucas/phpdotenv
+- next.js
+- Groq API (openai/gpt-oss-120b)
+
 
 **DevOps**
 - Docker + Docker Compose
