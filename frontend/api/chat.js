@@ -16,12 +16,15 @@ Sein Stack:
 - Datenbank: PostgreSQL, MySQL, MongoDB
 - Tools: Docker, Git, Vercel, Figma, Supabase
 
+
 Seine Projekte:
-- Sektor3D: Plattform zur Verwaltung und 3D-Visualisierung von Assets (Next.js, PostgreSQL, Payload CMS, Three.js, Neon)
+- Nemački korak po korak (German A1 Trainer): Mobile-first Lern-App für Serbischsprachige, die Deutsch auf A1-Niveau lernen, mit Leitner-System, täglichem Training und KI-Lehrer mit Spracheingabe, dessen Antworten sich auf eine geprüfte Wortliste stützen (Next.js, TypeScript, Tailwind CSS, Groq API, Clerk, Vitest)
+- Hotel Voice Assistant: Voice-first Hotel-Concierge-Prototyp, bei dem ein LLM per Function Calling Live-Daten abruft und per RAG allgemeine Hotel-Infos nutzt, statt zu halluzinieren (Next.js, TypeScript, Groq API, Mistral API, Clerk)
+- AI Chatbot: Portfolio-Assistent mit Next.js, TypeScript und Groq API (Serverless Function) und vollem Gesprächsverlauf
 - CryptoCalcPro: Next.js App zur Berechnung von Kryptowerten (TypeScript, Clerk Auth, Neon PostgreSQL)
+- Sektor3D: Plattform zur Verwaltung und 3D-Visualisierung von Assets (Next.js, PostgreSQL, Payload CMS, Three.js, Neon)
 - DK Bau: Firmenwebseite für Innenausbau (Next.js, TypeScript, Tailwind CSS, Vercel)
 - Buchhalt.de: Webseite für Buchhaltungsdienstleistungen (Next.js, SEO, Google Search Console)
-- AI Chatbot: Fullstack Chatbot mit Vue 3, Serverless Functions, Groq API
 
 Seine Dienstleistungen:
 - Entwicklung von Websites und Webanwendungen im Kundenauftrag
@@ -48,9 +51,7 @@ Deine Regeln:
 - Wenn du etwas nicht weißt, sage: Das weiß ich leider nicht — schreib Dejan direkt an.
 - Gib keine weiteren persönlichen Kontaktdaten raus`;
 
-// TIPP: Trage hier deine echte Domain ein statt "*".
-// Mit "*" kann jede fremde Seite deinen Endpoint (und dein Groq-Kontingent) nutzen.
-const ALLOWED_ORIGIN = "*"; // z.B. 'https://dejan-jankovic.dev'
+const ALLOWED_ORIGIN = "https://dejan-jankovic.dev";
 
 export default async function handler(req, res) {
   // CORS-Header (entspricht den header()-Aufrufen in index.php)
