@@ -49,77 +49,72 @@ Deine Regeln:
 - Gib nur die E-Mail heraus wenn jemand nach Kontakt fragt: info@dejan-jankovic.dev
 - Erfinde NIEMALS Projekte oder Erfahrungen die nicht hier stehen
 - Wenn du etwas nicht weißt, sage: Das weiß ich leider nicht — schreib Dejan direkt an.
-- Gib keine weiteren persönlichen Kontaktdaten raus`;
+- Gib keine weiteren persönlichen Kontaktdaten raus`
 
-const ALLOWED_ORIGIN = "https://dejan-jankovic.dev";
+const ALLOWED_ORIGIN = '*'
 
 export default async function handler(req, res) {
   // CORS-Header (entspricht den header()-Aufrufen in index.php)
-  res.setHeader("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN)
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
   // Preflight abfangen
-  if (req.method === "OPTIONS") {
-    return res.status(204).end();
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end()
   }
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' })
   }
 
   // Nachricht und History empfangen — Vercel parst JSON-Bodies automatisch
-  const { message = "Hallo", history = [] } = req.body ?? {};
+  const { message = 'Hallo', history = [] } = req.body ?? {}
 
   // Basis-Validierung: verhindert, dass jemand beliebige Rollen/Formate einschleust
   const safeHistory = Array.isArray(history)
     ? history
         .filter(
           (m) =>
-            m &&
-            (m.role === "user" || m.role === "assistant") &&
-            typeof m.content === "string",
+            m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string',
         )
         .slice(-20) // History begrenzen: spart Tokens, verhindert riesige Payloads
-    : [];
+    : []
 
   const messages = [
-    { role: "system", content: SYSTEM_PROMPT },
+    { role: 'system', content: SYSTEM_PROMPT },
     ...safeHistory,
-    { role: "user", content: String(message) },
-  ];
+    { role: 'user', content: String(message) },
+  ]
 
   try {
     // Groq API aufrufen (fetch ersetzt cURL)
-    const groqRes = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "openai/gpt-oss-120b",
-          messages,
-        }),
+    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
       },
-    );
+      body: JSON.stringify({
+        model: 'openai/gpt-oss-120b',
+        messages,
+      }),
+    })
 
     if (!groqRes.ok) {
       // Fehler der Groq API nicht verschlucken (das tat die PHP-Version)
-      const errText = await groqRes.text();
-      console.error("Groq API error:", groqRes.status, errText);
-      return res.status(502).json({ error: "AI service unavailable" });
+      const errText = await groqRes.text()
+      console.error('Groq API error:', groqRes.status, errText)
+      return res.status(502).json({ error: 'AI service unavailable' })
     }
 
-    const result = await groqRes.json();
-    const reply = result.choices?.[0]?.message?.content ?? "";
+    const result = await groqRes.json()
+    const reply = result.choices?.[0]?.message?.content ?? ''
 
     // Antwort zurückgeben — gleiches Format wie vorher: { reply: "..." }
-    return res.status(200).json({ reply });
+    return res.status(200).json({ reply })
   } catch (err) {
-    console.error("Handler error:", err);
-    return res.status(500).json({ error: "Internal server error" });
+    console.error('Handler error:', err)
+    return res.status(500).json({ error: 'Internal server error' })
   }
 }
